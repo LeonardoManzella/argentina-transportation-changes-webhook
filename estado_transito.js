@@ -113,18 +113,18 @@ module.exports =
       })(function(err, extra_data) {
       console.log("Inner Xray End")
       
-      
+      /*
       if(err){
         console.log("Inner Xray Error! " + JSON.stringify(err))
         res.write( JSON.stringify(err));
       }
-      else{
+      else{*/
          console.log("Data " + JSON.stringify( data ))
-         console.log("Extra Data " + JSON.stringify( extra_data ))
+         //console.log("Extra Data " + JSON.stringify( extra_data ))
         
         console.log("Writing Response")
         var realData = data.data[0];
-        realData.status_mitre = extract_status(extra_data.extra_data[0].raw_line);
+        //realData.status_mitre = extract_status(extra_data.extra_data[0].raw_line);
         console.log("Real Data " + JSON.stringify( realData ))
         
         console.log("Sending event to Maker...")
@@ -134,7 +134,7 @@ module.exports =
         console.log("Event send!")
         res.write( JSON.stringify( realData ));
         console.log("Response Writed");
-      }
+      //}
        res.end();
        console.log("Response End")
       });
