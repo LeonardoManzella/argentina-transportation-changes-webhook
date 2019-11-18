@@ -14,11 +14,9 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
-    "arachnod": "^0.4.4",
-    "cheerio": "^1.0.0-rc.3",
-    "htmlparser2": "^4.0.0",
-    "osmosis": "^1.1.10",
-    "request": "^2.88.0",
-    "x-ray": "^2.3.4"
+    "cheerio": "1.0.0-rc.3",
+    "htmlparser2": "4.0.0",
+    "request": "2.88.0",
+    "x-ray": "2.3.4"
   }
 }

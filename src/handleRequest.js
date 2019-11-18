@@ -2,8 +2,6 @@
 // import Xray from 'x-ray'
 // import cheerio from "cheerio"
 // var xray_ready = Xray();
-// import osmosis from 'osmosis'
-// import arachnod from 'arachnod'
 const htmlparser2 = require("htmlparser2");
 
 function extract_status(original_string){
@@ -78,10 +76,6 @@ function sendToMaker(makerKey,eventName,data){
 }
 
 
-//! TODO rewrite without using xray and cheerio, see https://github.com/matthewmueller/x-ray/issues/187
-// Try to use https://www.npmjs.com/package/osmosis that is very similar and uses promises
-// If not, use https://www.npmjs.com/package/arachnod
-
 function myParser(res) {
     // write the header and set the response type as a json
     console.log("Response Begin");
@@ -149,29 +143,40 @@ function myParser(res) {
 
 //Handle Main Request
 export default async function handleRequest(mainRequest) {
-    console.log("htmlparser2: ", htmlparser2);
-    const parser = new htmlparser2.Parser(
-        {
-            onopentag(name, attribs) {
-                if (name === "script" && attribs.type === "text/javascript") {
-                    console.log("JS! Hooray!");
-                }
-            },
-            ontext(text) {
-                console.log("-->", text);
-            },
-            onclosetag(tagname) {
-                if (tagname === "script") {
-                    console.log("That's it?!");
-                }
-            }
-        },
-        { decodeEntities: true }
-    );
-    parser.write(
-        "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
-    );
-    parser.end();
+    // console.log("htmlparser2: ", htmlparser2);
+    // const parser = new htmlparser2.Parser(
+    //     {
+    //         onopentag(name, attribs) {
+    //             if (name === "script" && attribs.type === "text/javascript") {
+    //                 console.log("JS! Hooray!");
+    //             }
+    //         },
+    //         ontext(text) {
+    //             console.log("-->", text);
+    //         },
+    //         onclosetag(tagname) {
+    //             if (tagname === "script") {
+    //                 console.log("That's it?!");
+    //             }
+    //         }
+    //     },
+    //     { decodeEntities: true }
+    // );
+    // parser.write(
+    //     "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
+    // );
+    // parser.end();
+
+    //! TODO el problema es que se llena desde el Javascript con una libreria de jqueri SignalR o algo asi, habria que entender como funciona que hace una coneccion a singalR de metrovias y usar los datos que devuelvan directamente 
+    await fetch('https://www.metrovias.com.ar/estadolineas/desktop.html')
+    .then((res) => {
+        console.log("There is response!");
+        return res.text();
+    })
+    .then((data) => {
+        console.log("Data: ", data);
+        // $('#container').html(data);
+    });
 
     return new Response('Hello worker!', {
         headers: { 'content-type': 'text/plain' },

@@ -3701,29 +3701,39 @@ function myParser(res) {
 
 //Handle Main Request
 async function handleRequest(mainRequest) {
-    console.log("htmlparser2: ", htmlparser2);
-    const parser = new htmlparser2.Parser(
-        {
-            onopentag(name, attribs) {
-                if (name === "script" && attribs.type === "text/javascript") {
-                    console.log("JS! Hooray!");
-                }
-            },
-            ontext(text) {
-                console.log("-->", text);
-            },
-            onclosetag(tagname) {
-                if (tagname === "script") {
-                    console.log("That's it?!");
-                }
-            }
-        },
-        { decodeEntities: true }
-    );
-    parser.write(
-        "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
-    );
-    parser.end();
+    // console.log("htmlparser2: ", htmlparser2);
+    // const parser = new htmlparser2.Parser(
+    //     {
+    //         onopentag(name, attribs) {
+    //             if (name === "script" && attribs.type === "text/javascript") {
+    //                 console.log("JS! Hooray!");
+    //             }
+    //         },
+    //         ontext(text) {
+    //             console.log("-->", text);
+    //         },
+    //         onclosetag(tagname) {
+    //             if (tagname === "script") {
+    //                 console.log("That's it?!");
+    //             }
+    //         }
+    //     },
+    //     { decodeEntities: true }
+    // );
+    // parser.write(
+    //     "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
+    // );
+    // parser.end();
+
+    await fetch('https://www.metrovias.com.ar/estadolineas/mobile.html')
+    .then((res) => {
+        console.log("There is response!");
+        return res.text();
+    })
+    .then((data) => {
+        console.log("Data: ", data);
+        // $('#container').html(data);
+    });
 
     return new Response('Hello worker!', {
         headers: { 'content-type': 'text/plain' },
