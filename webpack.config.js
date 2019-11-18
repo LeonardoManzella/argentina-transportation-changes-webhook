@@ -2,7 +2,7 @@
 module.exports = {
     entry: "./src/index.js",
     // target: 'webworker',
-    mode: "development",
+    mode: "production",
     optimization: {
       minimize: false
     },

@@ -4,31 +4,7 @@
 // var xray_ready = Xray();
 // import osmosis from 'osmosis'
 // import arachnod from 'arachnod'
-import htmlparser2 from 'htmlparser2'
-
-// const parser = new htmlparser2.Parser(
-//     {
-//         onopentag(name, attribs) {
-//             if (name === "script" && attribs.type === "text/javascript") {
-//                 console.log("JS! Hooray!");
-//             }
-//         },
-//         ontext(text) {
-//             console.log("-->", text);
-//         },
-//         onclosetag(tagname) {
-//             if (tagname === "script") {
-//                 console.log("That's it?!");
-//             }
-//         }
-//     },
-//     { decodeEntities: true }
-// );
-// parser.write(
-//     "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
-// );
-// parser.end();
-
+const htmlparser2 = require("htmlparser2");
 
 function extract_status(original_string){
     console.log("Extracting Status from " + original_string + "..");
@@ -173,6 +149,30 @@ function myParser(res) {
 
 //Handle Main Request
 export default async function handleRequest(mainRequest) {
+    console.log("htmlparser2: ", htmlparser2);
+    const parser = new htmlparser2.Parser(
+        {
+            onopentag(name, attribs) {
+                if (name === "script" && attribs.type === "text/javascript") {
+                    console.log("JS! Hooray!");
+                }
+            },
+            ontext(text) {
+                console.log("-->", text);
+            },
+            onclosetag(tagname) {
+                if (tagname === "script") {
+                    console.log("That's it?!");
+                }
+            }
+        },
+        { decodeEntities: true }
+    );
+    parser.write(
+        "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
+    );
+    parser.end();
+
     return new Response('Hello worker!', {
         headers: { 'content-type': 'text/plain' },
     });
