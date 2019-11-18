@@ -1,5 +1,5 @@
 // jshint esversion:6
-import handleRequest from './src/handlers/handleRequest'
+import handleRequest from './handleRequest'
 
 
 // EntryPoint for Cloudflare

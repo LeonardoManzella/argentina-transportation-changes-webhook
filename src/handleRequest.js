@@ -1,20 +1,46 @@
-import request from 'request'
+// import request from 'request'
 // import Xray from 'x-ray'
 // import cheerio from "cheerio"
 // var xray_ready = Xray();
+// import osmosis from 'osmosis'
+// import arachnod from 'arachnod'
+import htmlparser2 from 'htmlparser2'
+
+// const parser = new htmlparser2.Parser(
+//     {
+//         onopentag(name, attribs) {
+//             if (name === "script" && attribs.type === "text/javascript") {
+//                 console.log("JS! Hooray!");
+//             }
+//         },
+//         ontext(text) {
+//             console.log("-->", text);
+//         },
+//         onclosetag(tagname) {
+//             if (tagname === "script") {
+//                 console.log("That's it?!");
+//             }
+//         }
+//     },
+//     { decodeEntities: true }
+// );
+// parser.write(
+//     "Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>"
+// );
+// parser.end();
 
 
 function extract_status(original_string){
-console.log("Extracting Status from " + original_string + "..");
-var new_string = "";
-var regular_expresion = /Retiro(\w)*Jos/i;      //Obtain status for José León Suárez-Retiro. It does repeats endlesly "José León Suárez-Retiro<status>José León Suárez-Retiro"
-var first_word = "Retiro";
-var second_word = "Jos";
-new_string = original_string.match(regular_expresion)[0];   //Obtain first ocurrence
-new_string = new_string.slice(first_word.length  , new_string.search(second_word) );    //Slicing innecesary text
-console.log("Status: " + JSON.stringify(new_string));
+    console.log("Extracting Status from " + original_string + "..");
+    var new_string = "";
+    var regular_expresion = /Retiro(\w)*Jos/i;      //Obtain status for José León Suárez-Retiro. It does repeats endlesly "José León Suárez-Retiro<status>José León Suárez-Retiro"
+    var first_word = "Retiro";
+    var second_word = "Jos";
+    new_string = original_string.match(regular_expresion)[0];   //Obtain first ocurrence
+    new_string = new_string.slice(first_word.length  , new_string.search(second_word) );    //Slicing innecesary text
+    console.log("Status: " + JSON.stringify(new_string));
 
-return new_string;
+    return new_string;
 }
 
 function is_normal(an_status){
@@ -60,16 +86,16 @@ function sendToMaker(makerKey,eventName,data){
     var actual_date = d.getDate().toString() + "/" + (d.getMonth()+1).toString();
     console.log("actual date " + actual_date);
 
-    request.post({
-        url: url_string,
-        form:    { 
-        'value1' : html,
-        'value2' : actual_date,
-        'value3' : ""}
-        }, function(error, response, body) {
-        console.log('Body response was ', body);
-        console.log('Error was ', error);
-        });
+    // request.post({
+    //     url: url_string,
+    //     form:    { 
+    //     'value1' : html,
+    //     'value2' : actual_date,
+    //     'value3' : ""}
+    //     }, function(error, response, body) {
+    //     console.log('Body response was ', body);
+    //     console.log('Error was ', error);
+    //     });
         
     console.log("Send");
     }
@@ -80,7 +106,7 @@ function sendToMaker(makerKey,eventName,data){
 // Try to use https://www.npmjs.com/package/osmosis that is very similar and uses promises
 // If not, use https://www.npmjs.com/package/arachnod
 
-function parser(res) {
+function myParser(res) {
     // write the header and set the response type as a json
     console.log("Response Begin");
     res.writeHead(200, { 'Content-Type': 'application/json' });
