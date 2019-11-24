@@ -168,15 +168,43 @@ export default async function handleRequest(mainRequest) {
     // parser.end();
 
     //! TODO el problema es que se llena desde el Javascript con una libreria de jqueri SignalR o algo asi, habria que entender como funciona que hace una coneccion a singalR de metrovias y usar los datos que devuelvan directamente 
-    await fetch('https://www.metrovias.com.ar/estadolineas/desktop.html')
-    .then((res) => {
-        console.log("There is response!");
-        return res.text();
-    })
-    .then((data) => {
-        console.log("Data: ", data);
-        // $('#container').html(data);
-    });
+    /*
+        
+    */
+   var hub = $.connection.moveShape;
+   hub.client.estadoLineas = function (html) {
+
+       if (html != "") {
+           $("#div").empty();
+           $("#divSinservicio").prop("hidden", true);
+           $("#divConSinservicio").prop("hidden", false);
+           $("#div").append(html);
+       }
+       else {
+           $("#div").empty();
+           $("#divSinservicio").prop("hidden", false);
+           $("#divConSinservicio").prop("hidden", true);
+       }
+
+   };
+   $.connection.hub.start().done(function () {
+
+   });
+   $.connection.hub.disconnected(function () {
+       setTimeout(function () {
+           $.connection.hub.start();
+       }, 5000);
+   });      
+
+    // await fetch('https://www.metrovias.com.ar/estadolineas/desktop.html')
+    // .then((res) => {
+    //     console.log("There is response!");
+    //     return res.text();
+    // })
+    // .then((data) => {
+    //     console.log("Data: ", data);
+    //     // $('#container').html(data);
+    // });
 
     return new Response('Hello worker!', {
         headers: { 'content-type': 'text/plain' },
