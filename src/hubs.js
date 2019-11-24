@@ -1,17 +1,16 @@
 export default function prepareSignalR(jQuery){
-    //! TODO include jquery 1.6.4 instance replacing $
     "use strict";
 
-    if (typeof ($.signalR) !== "function") {
+    if (typeof (jQuery.signalR) !== "function") {
         throw new Error("SignalR: SignalR is not loaded. Please ensure jquery.signalR-x.js is referenced before ~/signalr/js.");
     }
 
-    var signalR = $.signalR;
+    var signalR = jQuery.signalR;
 
     function makeProxyCallback(hub, callback) {
         return function () {
             // Call the client hub method
-            callback.apply(hub, $.makeArray(arguments));
+            callback.apply(hub, jQuery.makeArray(arguments));
         };
     }
 
@@ -40,7 +39,7 @@ export default function prepareSignalR(jQuery){
                     if (hub.client.hasOwnProperty(memberKey)) {
                         memberValue = hub.client[memberKey];
 
-                        if (!$.isFunction(memberValue)) {
+                        if (!jQuery.isFunction(memberValue)) {
                             // Not a client hub function
                             continue;
                         }
@@ -53,7 +52,7 @@ export default function prepareSignalR(jQuery){
         }
     }
 
-    $.hubConnection.prototype.createHubProxies = function () {
+    jQuery.hubConnection.prototype.createHubProxies = function () {
         var proxies = {};
         this.starting(function () {
             // Register the hub proxies as subscribed
@@ -80,7 +79,7 @@ export default function prepareSignalR(jQuery){
         return proxies;
     };
 
-    signalR.hub = $.hubConnection("/estadolineas/signalr", { useDefaultPath: false });
-    $.extend(signalR, signalR.hub.createHubProxies());
-    return $;
+    signalR.hub = jQuery.hubConnection("https://www.metrovias.com.ar/estadolineas/signalr", { useDefaultPath: false });
+    jQuery.extend(signalR, signalR.hub.createHubProxies());
+    return jQuery;
 }

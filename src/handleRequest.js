@@ -2,7 +2,9 @@
 // import Xray from 'x-ray'
 // import cheerio from "cheerio"
 // var xray_ready = Xray();
+import hubInitializer from './hubs'
 const htmlparser2 = require("htmlparser2");
+
 
 function extract_status(original_string){
     console.log("Extracting Status from " + original_string + "..");
@@ -169,30 +171,23 @@ export default async function handleRequest(mainRequest) {
 
     //! TODO el problema es que se llena desde el Javascript con una libreria de jqueri SignalR o algo asi, habria que entender como funciona que hace una coneccion a singalR de metrovias y usar los datos que devuelvan directamente 
     /*
-        
+        Hay que incluir jquery, signalR y las librerias asociadas, tengo descargadas una copia pero no se si podemos usarlas asi nomas. 
+        Porque necesitamos que se pongan en nombre jQuery, no se si $ va a permitirme el cloudflare worker
+        Hay que probar incluir asi nomas las libreiras con import o require a ver que pasa
+        Al finalizar hay que parsear el html para obtener lo que quiero para llenarlo en un array o simil para poder procesarlo con las otras funciones
     */
-   var hub = $.connection.moveShape;
+   hubInitializer(jQuery);
+   var hub = jQuery.connection.moveShape;
    hub.client.estadoLineas = function (html) {
-
-       if (html != "") {
-           $("#div").empty();
-           $("#divSinservicio").prop("hidden", true);
-           $("#divConSinservicio").prop("hidden", false);
-           $("#div").append(html);
-       }
-       else {
-           $("#div").empty();
-           $("#divSinservicio").prop("hidden", false);
-           $("#divConSinservicio").prop("hidden", true);
-       }
+       console.log("HTML: ", html);
 
    };
-   $.connection.hub.start().done(function () {
+   jQuery.connection.hub.start().done(function () {
 
    });
-   $.connection.hub.disconnected(function () {
+   jQuery.connection.hub.disconnected(function () {
        setTimeout(function () {
-           $.connection.hub.start();
+           jQuery.connection.hub.start();
        }, 5000);
    });      
 
