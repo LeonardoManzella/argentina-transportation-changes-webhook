@@ -3,7 +3,13 @@
 // import cheerio from "cheerio"
 // var xray_ready = Xray();
 import hubInitializer from './hubs'
+import prepareFakeWindow from './workerFakeDOM'
+import prepareJQuery from './jquery-3.3.1'
+// import signalR from './jquery.signalR-2.4.0'
+// importScripts("workerFakeDOM.js");
+// importScripts('jquery-3.3.1');
 const htmlparser2 = require("htmlparser2");
+
 
 
 function extract_status(original_string){
@@ -145,6 +151,10 @@ function myParser(res) {
 
 //Handle Main Request
 export default async function handleRequest(mainRequest) {
+    prepareFakeWindow(self);
+    prepareJQuery();
+    // console.log("**** window document:", window.document);
+    // console.log("**** JQuery version:", $.fn.jquery);
     // console.log("htmlparser2: ", htmlparser2);
     // const parser = new htmlparser2.Parser(
     //     {
