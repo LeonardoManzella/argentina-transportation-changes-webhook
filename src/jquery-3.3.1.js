@@ -9349,6 +9349,8 @@ export default function prepareJQuery(){
 		}
 	} );
 
+	console.log("-- 5 ---");
+
 	jQuery.each( [ "get", "post" ], function( i, method ) {
 		jQuery[ method ] = function( url, data, callback, type ) {
 
@@ -9370,6 +9372,7 @@ export default function prepareJQuery(){
 		};
 	} );
 
+	console.log("-- 6 ---");
 
 	jQuery._evalUrl = function( url ) {
 		return jQuery.ajax( {
@@ -9385,6 +9388,7 @@ export default function prepareJQuery(){
 		} );
 	};
 
+	console.log("-- 7 ---");
 
 	jQuery.fn.extend( {
 		wrapAll: function( html ) {
@@ -9452,6 +9456,7 @@ export default function prepareJQuery(){
 		}
 	} );
 
+	console.log("-- 8 ---");
 
 	jQuery.expr.pseudos.hidden = function( elem ) {
 		return !jQuery.expr.pseudos.visible( elem );
@@ -9460,7 +9465,7 @@ export default function prepareJQuery(){
 		return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
 	};
 
-
+	console.log("-- 9 ---");
 
 
 	jQuery.ajaxSettings.xhr = function() {
@@ -9468,6 +9473,8 @@ export default function prepareJQuery(){
 			return new window.XMLHttpRequest();
 		} catch ( e ) {}
 	};
+	
+	console.log("-- 10 ---");
 
 	var xhrSuccessStatus = {
 
@@ -9482,6 +9489,8 @@ export default function prepareJQuery(){
 
 	support.cors = !!xhrSupported && ( "withCredentials" in xhrSupported );
 	support.ajax = xhrSupported = !!xhrSupported;
+
+	console.log("-- 11 ---");
 
 	jQuery.ajaxTransport( function( options ) {
 		var callback, errorCallback;
@@ -9624,7 +9633,7 @@ export default function prepareJQuery(){
 		}
 	} );
 
-
+	console.log("-- 12 ---");
 
 
 	// Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
@@ -9633,6 +9642,8 @@ export default function prepareJQuery(){
 			s.contents.script = false;
 		}
 	} );
+
+	console.log("-- 13 ---");
 
 	// Install script dataType
 	jQuery.ajaxSetup( {
@@ -9651,6 +9662,8 @@ export default function prepareJQuery(){
 		}
 	} );
 
+	console.log("-- 14 ---");
+
 	// Handle cache's special case and crossDomain
 	jQuery.ajaxPrefilter( "script", function( s ) {
 		if ( s.cache === undefined ) {
@@ -9660,6 +9673,8 @@ export default function prepareJQuery(){
 			s.type = "GET";
 		}
 	} );
+
+	console.log("-- 15 ---"); 
 
 	// Bind script tag hack transport
 	jQuery.ajaxTransport( "script", function( s ) {
@@ -9696,7 +9711,7 @@ export default function prepareJQuery(){
 	} );
 
 
-
+	console.log("-- 16 ---");
 
 	var oldCallbacks = [],
 		rjsonp = /(=)\?(?=&|$)|\?\?/;
@@ -9710,6 +9725,8 @@ export default function prepareJQuery(){
 			return callback;
 		}
 	} );
+
+	console.log("-- 17 ---");
 
 	// Detect, normalize options and install callbacks for jsonp requests
 	jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
@@ -9790,7 +9807,7 @@ export default function prepareJQuery(){
 		}
 	} );
 
-
+	console.log("-- 18 ---");
 
 
 	// Support: Safari 8 only
@@ -9799,10 +9816,9 @@ export default function prepareJQuery(){
 	// Because of that, this security measure has to be disabled in Safari 8.
 	// https://bugs.webkit.org/show_bug.cgi?id=137337
 	support.createHTMLDocument = ( function() {
-		var body = document.implementation.createHTMLDocument( "" ).body;
-		body.innerHTML = "<form></form><form></form>";
-		return body.childNodes.length === 2;
 	} )();
+
+	console.log("-- 19 ---");
 
 
 	// Argument "data" should be string of html
@@ -10367,7 +10383,7 @@ export default function prepareJQuery(){
 	}
 
 
-
+	console.log("-- END JQuery ---");
 
 	return jQuery;
 	} );
