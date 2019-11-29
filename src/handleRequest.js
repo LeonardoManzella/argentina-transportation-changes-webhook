@@ -5,7 +5,8 @@
 import hubInitializer from './hubs'
 import prepareFakeWindow from './workerFakeDOM'
 import prepareJQuery from './jquery-3.3.1'
-// import signalR from './jquery.signalR-2.4.0'
+import prepareSignalR from './hubs';
+import initSignalR from './jquery.signalR-2.4.0'
 // importScripts("workerFakeDOM.js");
 // importScripts('jquery-3.3.1');
 const htmlparser2 = require("htmlparser2");
@@ -153,8 +154,10 @@ function myParser(res) {
 export default async function handleRequest(mainRequest) {
     prepareFakeWindow(self);
     prepareJQuery();
-    // console.log("**** window document:", window.document);
-    // console.log("**** JQuery version:", $.fn.jquery);
+    console.log("**** window document:", window.document);
+    console.log("**** JQuery version:", $.fn.jquery);
+    initSignalR();
+    prepareSignalR(); //TODO fix here some bug, delete unnecessary things to make it work
     // console.log("htmlparser2: ", htmlparser2);
     // const parser = new htmlparser2.Parser(
     //     {
