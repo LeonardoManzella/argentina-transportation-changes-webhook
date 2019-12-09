@@ -2,7 +2,6 @@
 // import Xray from 'x-ray'
 // import cheerio from "cheerio"
 // var xray_ready = Xray();
-import hubInitializer from './hubs'
 import prepareFakeWindow from './workerFakeDOM'
 import prepareJQuery from './jquery-3.3.1'
 import prepareSignalR from './hubs';
@@ -157,7 +156,7 @@ export default async function handleRequest(mainRequest) {
     console.log("**** window document:", window.document);
     console.log("**** JQuery version:", $.fn.jquery);
     initSignalR();
-    prepareSignalR(); //TODO fix here some bug, delete unnecessary things to make it work
+    prepareSignalR(jQuery); 
     // console.log("htmlparser2: ", htmlparser2);
     // const parser = new htmlparser2.Parser(
     //     {
@@ -189,16 +188,20 @@ export default async function handleRequest(mainRequest) {
         Hay que probar incluir asi nomas las libreiras con import o require a ver que pasa
         Al finalizar hay que parsear el html para obtener lo que quiero para llenarlo en un array o simil para poder procesarlo con las otras funciones
     */
-   hubInitializer(jQuery);
    var hub = jQuery.connection.moveShape;
+   console.log("--- hub initialized ---", hub);
    hub.client.estadoLineas = function (html) {
        console.log("HTML: ", html);
 
    };
    jQuery.connection.hub.start().done(function () {
-
+    console.log("Conecction done");
    });
+//    jQuery.connection.hub.start().fail(function () {
+//     console.error("Conecction fail");
+//    });
    jQuery.connection.hub.disconnected(function () {
+       console.log();
        setTimeout(function () {
            jQuery.connection.hub.start();
        }, 5000);

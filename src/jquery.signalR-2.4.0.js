@@ -434,6 +434,7 @@
                 /// <summary>Starts the connection</summary>
                 /// <param name="options" type="Object">Options map</param>
                 /// <param name="callback" type="Function">A callback function to execute when the connection has started</param>
+                console.log("- Start");
                 var connection = this,
                     config = {
                         pingInterval: 300000,
