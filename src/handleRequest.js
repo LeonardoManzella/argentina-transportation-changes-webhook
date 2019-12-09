@@ -201,7 +201,7 @@ export default async function handleRequest(mainRequest) {
 //     console.error("Conecction fail");
 //    });
    jQuery.connection.hub.disconnected(function () {
-       console.log();
+       console.log("Connection finished");
        setTimeout(function () {
            jQuery.connection.hub.start();
        }, 5000);

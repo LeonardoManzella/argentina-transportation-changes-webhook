@@ -908,6 +908,7 @@
             },
 
             disconnected: function (callback) {
+                console.log("- Disconected");
                 /// <summary>Adds a callback that will be invoked when the client disconnects</summary>
                 /// <param name="callback" type="Function">A callback function to execute when the connection is broken</param>
                 /// <returns type="signalR" />

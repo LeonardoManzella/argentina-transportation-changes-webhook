@@ -61,6 +61,7 @@ export default function prepareSignalR(jQuery){
 
             this._registerSubscribedHubs();
         }).disconnected(function () {
+            console.log("-- Disconected");
             // Unsubscribe all hub proxies when we "disconnect".  This is to ensure that we do not re-add functional call backs.
             // (instance, shouldSubscribe)
             registerHubProxies(proxies, false);
